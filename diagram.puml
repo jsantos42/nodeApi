@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class Manager {
+	- tasks: Task[]
+	+ getTasks(): Task[]
+	+ deleteTask(): void
+	+ notify(): void
+}
+
+abstract class Technician {
+	- tasks: Task[]
+	+ getTasks(): Task[]
+	+ createTask(): Task
+	+ updateTask(): void
+	+ performTask(): void
+}
+
+abstract class Task {
+	- summary: String
+	- date: Date
+	- responsibleTechnician: Technician
+	+ getSummary(): String
+	+ getDate(): Date
+	+ getResponsibleTechnician(): Technician
+}
+
+Manager --> Task : has many
+Technician --> Task : has many
+Technician <-- Task : has one
+
+@enduml
