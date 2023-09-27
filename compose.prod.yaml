@@ -1,0 +1,7 @@
+services:
+  api:
+    build:
+      target: production
+    ports:
+      - ${PORT}:${PORT}
+    command: npm start
