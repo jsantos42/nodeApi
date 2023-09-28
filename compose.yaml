@@ -12,5 +12,4 @@ services:
       - PORT=${PORT}
     ports:
       - ${PORT}:${PORT}
-      - "9229:9229"
     command: npm run dev
