@@ -2,6 +2,7 @@ services:
   api:
     build:
       target: production
+    volumes: !reset []
     ports:
       - ${PORT}:${PORT}
     command: npm start
