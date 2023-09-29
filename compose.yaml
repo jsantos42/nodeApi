@@ -10,6 +10,29 @@ services:
       - ./src:/var/www
     environment:
       - PORT=${PORT}
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    networks:
+      - container-network
     ports:
       - ${PORT}:${PORT}
+    restart: unless-stopped
     command: npm run dev
+
+  db:
+    image: mysql:8
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=1
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+    networks:
+      - container-network
+    ports:
+      - "3306:3306"
+    restart: unless-stopped
+
+networks:
+  container-network:
+    driver: bridge
