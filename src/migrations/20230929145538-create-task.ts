@@ -10,7 +10,7 @@ export default {
 				type: DataTypes.INTEGER,
 			},
 			summary: {
-				type: DataTypes.STRING,
+				type: DataTypes.STRING(2500),
 			},
 			performedAt: {
 				type: DataTypes.DATE,

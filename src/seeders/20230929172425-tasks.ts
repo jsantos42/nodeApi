@@ -9,7 +9,7 @@ export default {
 
 		const technicianUsersIds = technicianUsers[0].map((user: any) => user.id);
 
-		const summary = 'a'.repeat(250);
+		const summary = 'a'.repeat(2500);
 
 		const tasksData = Array.from({length: 10}, (v, index) => ({
 			summary: summary,

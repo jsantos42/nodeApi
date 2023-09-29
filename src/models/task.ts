@@ -34,7 +34,7 @@ export class Task extends Model<TaskAttributes> {
 export function initTask(sequelize: Sequelize) {
 	Task.init(
 		{
-			summary: DataTypes.STRING,
+			summary: DataTypes.STRING(2500),
 			performedAt: DataTypes.DATE,
 		},
 		{
