@@ -15,6 +15,15 @@ export default {
 			performedAt: {
 				type: DataTypes.DATE,
 			},
+			technicianId: {
+				type: DataTypes.INTEGER,
+				references: {
+					model: 'Technicians',
+					key: 'id',
+				},
+				onUpdate: 'CASCADE',
+				onDelete: 'CASCADE',
+			},
 			createdAt: {
 				allowNull: false,
 				type: DataTypes.DATE,

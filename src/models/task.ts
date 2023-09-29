@@ -23,8 +23,13 @@ export class Task extends Model<TaskAttributes> {
 		return this.#performedAt;
 	}
 
-	// static associate(models) {
-	// }
+	static associate(models: any) {
+		Task.belongsTo(models.Technician, {
+			foreignKey: 'technicianId',
+			as: 'technician',
+		});
+
+	}
 }
 
 export function initTask(sequelize: Sequelize) {

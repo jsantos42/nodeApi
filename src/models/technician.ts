@@ -30,8 +30,12 @@ export class Technician extends Model<TechnicianAttributes> {
 		return this.#email;
 	}
 
-	// static associate(models) {
-	// }
+	static associate(models: any) {
+		Technician.hasMany(models.Task, {
+			foreignKey: 'technicianId',
+			as: 'tasks',
+		});
+	}
 }
 
 export function initTechnician(sequelize: Sequelize) {
