@@ -18,6 +18,9 @@ services:
     ports:
       - ${PORT}:${PORT}
     restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
     command: npm run dev
 
   db:
@@ -32,6 +35,11 @@ services:
     ports:
       - "3306:3306"
     restart: unless-stopped
+    healthcheck:
+      test: mysqladmin ping -u ${MYSQL_USER} --password=${MYSQL_PASSWORD}
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 networks:
   container-network:
