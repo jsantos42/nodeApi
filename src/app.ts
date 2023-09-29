@@ -7,6 +7,8 @@ import express from "express";
 import router from "./routes/api";
 import dotenv from "dotenv";
 import {Sequelize} from "sequelize";
+import {initUser} from "./models/user";
+import {initTask} from "./models/task";
 
 // Load environment variables from a .env file into process.env
 dotenv.config();
@@ -67,6 +69,8 @@ const sequelize = new Sequelize(
 		dialect: 'mysql'
 	});
 
+initUser(sequelize);
+initTask(sequelize);
 
 app.listen(port, () => {
 	console.log(`Server running at localhost:${port}/`);
