@@ -10,5 +10,11 @@ up-prod:
 up-prod-build:
 	docker-compose -f compose.yaml -f compose.prod.yaml up -d --build
 
+test:
+	docker-compose -f compose.yaml -f compose.test.yaml up
+
+test-build:
+	docker-compose -f compose.yaml -f compose.test.yaml up --build
+
 down:
 	docker-compose down
