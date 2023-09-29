@@ -7,13 +7,30 @@ interface TechnicianAttributes {
 }
 
 export class Technician extends Model<TechnicianAttributes> {
-	public firstName!: string;
-	public lastName!: string;
-	public email!: string;
+	#firstName!: string;
+	#lastName!: string;
+	#email!: string;
 
-	// You can define associations here if needed
+	constructor(attributes?: TechnicianAttributes, options?: any) {
+		super(attributes, options);
+		this.#firstName = attributes?.firstName ?? '';
+		this.#lastName = attributes?.lastName ?? '';
+		this.#email = attributes?.email ?? '';
+	}
+
+	public get firstName(): string {
+		return this.#firstName;
+	}
+
+	public get lastName(): string {
+		return this.#lastName;
+	}
+
+	public get email(): string {
+		return this.#email;
+	}
+
 	// static associate(models) {
-	//   // define association here
 	// }
 }
 
