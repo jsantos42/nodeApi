@@ -9,4 +9,6 @@ router.get('/', function (req: Request, res: Response, next: NextFunction) {
 
 router.get('/users/:userId/tasks', taskController.getUserTasks);
 
+router.post('/users/:userId/tasks/:taskId/delete', taskController.deleteTask);
+
 export default router;
