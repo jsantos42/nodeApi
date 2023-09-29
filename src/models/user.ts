@@ -1,21 +1,28 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
-interface TechnicianAttributes {
+interface UserAttributes {
+	role: string;
 	firstName: string;
 	lastName: string;
 	email: string;
 }
 
-export class Technician extends Model<TechnicianAttributes> {
+export class User extends Model<UserAttributes> {
+	#role!: string;
 	#firstName!: string;
 	#lastName!: string;
 	#email!: string;
 
-	constructor(attributes?: TechnicianAttributes, options?: any) {
+	constructor(attributes?: UserAttributes, options?: any) {
 		super(attributes, options);
+		this.#role = attributes?.role ?? '';
 		this.#firstName = attributes?.firstName ?? '';
 		this.#lastName = attributes?.lastName ?? '';
 		this.#email = attributes?.email ?? '';
+	}
+
+	public get role(): string {
+		return this.#role;
 	}
 
 	public get firstName(): string {
@@ -31,23 +38,24 @@ export class Technician extends Model<TechnicianAttributes> {
 	}
 
 	static associate(models: any) {
-		Technician.hasMany(models.Task, {
+		User.hasMany(models.Task, {
 			foreignKey: 'technicianId',
 			as: 'tasks',
 		});
 	}
 }
 
-export function initTechnician(sequelize: Sequelize) {
-	Technician.init(
+export function initUser(sequelize: Sequelize) {
+	User.init(
 		{
+			role: DataTypes.STRING,
 			firstName: DataTypes.STRING,
 			lastName: DataTypes.STRING,
-			email: DataTypes.STRING,
+			email: DataTypes.STRING
 		},
 		{
 			sequelize,
-			modelName: 'Technician',
+			modelName: 'User',
 		}
 	);
 }

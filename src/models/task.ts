@@ -24,11 +24,10 @@ export class Task extends Model<TaskAttributes> {
 	}
 
 	static associate(models: any) {
-		Task.belongsTo(models.Technician, {
+		Task.belongsTo(models.User, {
 			foreignKey: 'technicianId',
 			as: 'technician',
 		});
-
 	}
 }
 
@@ -41,6 +40,14 @@ export function initTask(sequelize: Sequelize) {
 		{
 			sequelize,
 			modelName: 'Task',
+			scopes: {
+				technician: (technicianId: number) => ({
+					where: {
+						technicianId,
+					},
+				}),
+				manager: () => ({})
+			}
 		}
 	);
 }

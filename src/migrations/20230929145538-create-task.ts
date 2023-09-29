@@ -18,7 +18,7 @@ export default {
 			technicianId: {
 				type: DataTypes.INTEGER,
 				references: {
-					model: 'Technicians',
+					model: 'Users',
 					key: 'id',
 				},
 				onUpdate: 'CASCADE',
