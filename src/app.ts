@@ -6,6 +6,7 @@ import morgan from "morgan";
 import express from "express";
 import router from "./routes/api";
 import dotenv from "dotenv";
+import {Sequelize} from "sequelize";
 
 // Load environment variables from a .env file into process.env
 dotenv.config();
@@ -53,6 +54,28 @@ app.use(function(err: HttpError, req: Request, res: Response, next: NextFunction
 	res.status(err.status || 500);
 	res.render('error');
 })
+
+//==============================================================================
+// DB SETUP
+//==============================================================================
+const sequelize = new Sequelize(
+	process.env.MYSQL_DATABASE || 'database',
+	process.env.MYSQL_USER || 'user',
+	process.env.MYSQL_PASSWORD || 'password',
+	{
+		host: 'db',
+		dialect: 'mysql'
+	});
+
+(async function test() {
+	try {
+		await sequelize.authenticate();
+		console.log('Connection has been established successfully.');
+	} catch (error) {
+		console.error('Unable to connect to the database:', error);
+	}
+
+})();
 
 
 app.listen(port, () => {
