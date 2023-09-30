@@ -1,30 +1,29 @@
+COMPOSE_FILES = -f compose.yaml
+COMPOSE_FILES_DEV = $(COMPOSE_FILES) -f compose.dev.yaml
+COMPOSE_FILES_TEST = $(COMPOSE_FILES) -f compose.test.yaml
+RUN_MIGRATION = docker compose exec api npx sequelize-cli db:migrate
+RUN_SEEDING = docker compose exec api npx sequelize-cli db:seed:all
+RUN_TEST = docker compose exec api npm test
+BUILD_PROD = npm --prefix ./src run build
+
 up-dev:
-	docker-compose -f compose.yaml -f compose.dev.yaml up -d
+	docker-compose $(COMPOSE_FILES_DEV) up -d && $(RUN_MIGRATION)
 
 up-dev-build:
-	docker-compose -f compose.yaml -f compose.dev.yaml up -d --build \
-	&& docker compose exec api npx sequelize-cli db:migrate \
-	&& docker compose exec api npx sequelize-cli db:seed:all
+	docker-compose $(COMPOSE_FILES_DEV) up -d --build \
+	&& $(RUN_MIGRATION) && $(RUN_SEEDING)
 
 up-prod:
-	npm --prefix ./src run build \
-	&& docker-compose -f compose.yaml up -d \
-	&& docker compose exec api npx sequelize-cli db:migrate
+	$(BUILD_PROD) && docker-compose $(COMPOSE_FILES) up -d \
+	&& $(RUN_MIGRATION)
 
 up-prod-build:
-	npm --prefix ./src run build \
-	&& docker-compose -f compose.yaml up -d \
-	&& docker compose exec api npx sequelize-cli db:migrate
+	$(BUILD_PROD) && docker-compose $(COMPOSE_FILES) up -d --build \
+	&& $(RUN_MIGRATION)
 
 test:
-	docker-compose -f compose.yaml -f compose.test.yaml up -d \
-	&& docker compose exec api npx sequelize-cli db:migrate \
-	&& docker compose exec api npm test
-
-test-build:
-	docker-compose -f compose.yaml -f compose.test.yaml up -d --build \
-	&& docker compose exec api npx sequelize-cli db:migrate \
-	&& docker compose exec api npm test
+	docker-compose $(COMPOSE_FILES_TEST) up -d --build \
+	&& $(RUN_MIGRATION) && $(RUN_TEST) && $(MAKE) down
 
 down:
 	docker-compose down
