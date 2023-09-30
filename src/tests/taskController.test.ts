@@ -58,4 +58,10 @@ describe('Task Controller', () => {
 
 		expect(response.status).toBe(403);
 	});
+
+	afterAll(async () => {
+		await managerUser.destroy();
+		await technicianUser.destroy();
+		await task.destroy();
+	});
 });

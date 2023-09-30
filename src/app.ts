@@ -70,8 +70,10 @@ const sequelize = new Sequelize(
 initUser(sequelize);
 initTask(sequelize);
 
-app.listen(port, () => {
-	console.log(`Server running at localhost:${port}/`);
-});
+if (process.env.NODE_ENV !== 'test') {
+	app.listen(port, () => {
+		console.log(`Server running at localhost:${port}/`);
+	});
+}
 
 export default app;
